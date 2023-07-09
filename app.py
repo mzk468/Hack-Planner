@@ -33,5 +33,3 @@ def edit_item(item_id):
 def delete_item(item_id):
   del items[item_id - 1]
   return redirect('/')
-
-app.run(port=8000)
