@@ -11,6 +11,11 @@ def add_item():
   items.append(item)
   return redirect('/') # Go back to old page
 
+# Read functionality
+@app.route('/') # GET method implied, as default option
+def checklist():
+  return render_template('checklist.html', items=items)
+
 # Update functionality
 @app.route('/edit/<int:item_id>', methods=['GET', 'POST'])
 def edit_item(item_id):
