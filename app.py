@@ -5,7 +5,7 @@ app = Flask(__name__)
 items = [] # No DB for now, simply using list
 
 # Create functionality
-@app.route('/add', method=['POST'])
+@app.route('/add', methods=['POST'])
 def add_item():
   item = request.form['item']
   items.append(item)
