@@ -4,8 +4,6 @@ import sqlite3
 
 app = Flask(__name__)
 
-items = [] # No DB for now, simply using list
-
 db_path = 'checklist.db'
 
 def create_table():
@@ -48,28 +46,32 @@ def db_delete_item(item_id):
 @app.route('/add', methods=['POST'])
 def add_item():
   item = request.form['item']
-  items.append(item)
+  db_add_item(item)
   return redirect('/') # Go back to old page
 
 # Read functionality
 @app.route('/') # GET method implied, as default option
 def checklist():
+  create_table()
+  items = db_get_items()
   return render_template('checklist.html', items=items)
 
 # Update functionality
 @app.route('/edit/<int:item_id>', methods=['GET', 'POST'])
 def edit_item(item_id):
-  item = items[item_id - 1]
 
   if request.method == 'POST':
     new_item = request.form['item']
-    items[item_id - 1] = new_item
+    db_update_item(item_id, new_item)
     return redirect('/')
+  else:
+    items = db_get_items()
+    item = next((x[1] for x in items if x[0] == item_id), None)
   
   return render_template('edit.html', item=item, item_id=item_id)
 
 # Delete functionality
 @app.route('/delete/<int:item_id>')
 def delete_item(item_id):
-  del items[item_id - 1]
+  db_delete_item(item_id)
   return redirect('/')
