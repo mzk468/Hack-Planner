@@ -1,8 +1,19 @@
 from flask import Flask, render_template, request, redirect
 
+import sqlite3
+
 app = Flask(__name__)
 
 items = [] # No DB for now, simply using list
+
+db_path = 'checklist.db'
+
+def create_table():
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+  cursor.execute('''CREATE TABLE IF NOT EXISTS checklist (if INTEGER PRIMARY KEY AUTOINCREMENT, item TEXT)''')
+  connection.commit()
+  connection.close()
 
 # Create functionality
 @app.route('/add', methods=['POST'])
