@@ -30,6 +30,13 @@ def add_item(item):
   connection.commit()
   connection.close()
 
+def update_item(item_id, new_item):
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+  cursor.execute("UPDATE checklist SET item = ? WHERE id = ?", (new_item, item_id))
+  connection.commit()
+  connection.close()
+
 # Create functionality
 @app.route('/add', methods=['POST'])
 def add_item():
