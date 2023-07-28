@@ -15,6 +15,13 @@ def create_table():
   connection.commit()
   connection.close()
 
+def add_item(item):
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+  cursor.execute("INSERT INTO checklist (item) VALUES (?)", (item,))
+  connection.commit()
+  connection.close()
+
 def get_items():
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
@@ -23,17 +30,17 @@ def get_items():
   connection.close()
   return items
 
-def add_item(item):
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
-  cursor.execute("INSERT INTO checklist (item) VALUES (?)", (item,))
-  connection.commit()
-  connection.close()
-
 def update_item(item_id, new_item):
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
   cursor.execute("UPDATE checklist SET item = ? WHERE id = ?", (new_item, item_id))
+  connection.commit()
+  connection.close()
+
+def delete_item(item_id):
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+  cursor.execute("DELETE FROM checklist WHERE id = ?", (item_id,))
   connection.commit()
   connection.close()
 
