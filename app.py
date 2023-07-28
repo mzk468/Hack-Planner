@@ -23,6 +23,13 @@ def get_items():
   connection.close()
   return items
 
+def add_item(item):
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+  cursor.execute("INSERT INTO checklist (item) VALUES (?)", (item,))
+  connection.commit()
+  connection.close()
+
 # Create functionality
 @app.route('/add', methods=['POST'])
 def add_item():
