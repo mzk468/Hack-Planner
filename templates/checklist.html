@@ -9,11 +9,11 @@
     <div class="container">
       <h1>Hack Planner</h1>
 
-      <ul class="checklist_items">
+      <ul class="checklist-items">
         {% for item in items %}
         <li>
           {{ item }}
-          <a href="/edit/{{ loop.index }}">Edit</a>
+          <a href="/edit/{  { loop.index }}">Edit</a>
           <a href="/delete/{{ loop.index }}">Delete</a>
         </li>
         {% endfor %}
