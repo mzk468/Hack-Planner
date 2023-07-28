@@ -11,9 +11,17 @@ db_path = 'checklist.db'
 def create_table():
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
-  cursor.execute('''CREATE TABLE IF NOT EXISTS checklist (if INTEGER PRIMARY KEY AUTOINCREMENT, item TEXT)''')
+  cursor.execute('''CREATE TABLE IF NOT EXISTS checklist (id INTEGER PRIMARY KEY AUTOINCREMENT, item TEXT)''')
   connection.commit()
   connection.close()
+
+def get_items():
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+  cursor.execute("SELECT * FROM checklist")
+  items = cursor.fetchall()
+  connection.close()
+  return items
 
 # Create functionality
 @app.route('/add', methods=['POST'])
